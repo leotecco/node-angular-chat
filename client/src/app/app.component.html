@@ -1,0 +1,8 @@
+<h1>Chat Node-Angular</h1>
+<form (ngSubmit)="sendMessage()">
+  <label>
+    <h3>Message</h3>
+  </label>
+  <input type="text" name="message" [(ngModel)]="params.message">
+  <button type="submit">Send Message</button>
+</form>
