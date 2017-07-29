@@ -1,8 +1,35 @@
-<h1>Chat Node-Angular</h1>
-<form (ngSubmit)="sendMessage()">
+<h1>Chat NodeJS and Angular</h1>
+
+<ul id="chatbox" #chatScroll>
+  <li class="chatbox-message" *ngFor="let m of messages">
+    <h4 class="chatbox-message-user">{{ m.username }}</h4>
+    <p class="chatbox-message-body">
+      {{ m.body }}
+    </p>
+  </li>
+</ul>
+
+<form #chatForm="ngForm" (ngSubmit)="sendMessage()">
+  
+  <label>
+    <h3>Username</h3>
+  </label>
+  <input type="text" name="username" [(ngModel)]="message.username" #username="ngModel" [disabled]="blockUsername"
+     required minlength="4">
+  <div *ngIf="username.errors && (username.dirty || username.touched)">
+    <small [hidden]="!username.errors.required">Username is required!</small>
+    <small [hidden]="!username.errors.minlength">Username must be at least 4 characters long!</small>
+  </div>
+
   <label>
     <h3>Message</h3>
   </label>
-  <input type="text" name="message" [(ngModel)]="params.message">
-  <button type="submit">Send Message</button>
+  <input type="text" name="body" [(ngModel)]="message.body" #body="ngModel" required>
+  <button type="submit" [disabled]="!chatForm.form.valid">
+    Send Message
+  </button>
+  <div *ngIf="body.errors && (body.dirty || body.touched)">
+    <small [hidden]="!body.errors.required">Message is required!</small>
+  </div>
+
 </form>
